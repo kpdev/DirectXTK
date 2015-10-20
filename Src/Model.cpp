@@ -41,6 +41,11 @@ ModelMeshPart::ModelMeshPart() :
 }
 
 
+ModelMeshPart::~ModelMeshPart()
+{
+}
+
+
 _Use_decl_annotations_
 void ModelMeshPart::Draw( ID3D11DeviceContext* deviceContext, IEffect* ieffect, ID3D11InputLayout* iinputLayout, std::function<void()> setCustomState ) const
 {
@@ -85,7 +90,7 @@ void ModelMeshPart::CreateInputLayout( ID3D11Device* d3dDevice, IEffect* ieffect
     assert( d3dDevice != 0 );
 
     ThrowIfFailed(
-        d3dDevice->CreateInputLayout(&(vbDecl->front()),
+        d3dDevice->CreateInputLayout(vbDecl->data(),
                                      static_cast<UINT>( vbDecl->size() ),
                                      shaderByteCode, byteCodeLength,
                                      iinputLayout )
@@ -111,10 +116,10 @@ void ModelMeshPart::ModifyEffect( ID3D11Device* d3dDevice, std::shared_ptr<IEffe
     assert( d3dDevice != 0 );
 
     ThrowIfFailed(
-        d3dDevice->CreateInputLayout(&(vbDecl->front()),
-                                        static_cast<UINT>( vbDecl->size() ),
-                                        shaderByteCode, byteCodeLength,
-                                        &inputLayout )
+        d3dDevice->CreateInputLayout(vbDecl->data(),
+                                     static_cast<UINT>( vbDecl->size() ),
+                                     shaderByteCode, byteCodeLength,
+                                     &inputLayout )
     );
 }
 
@@ -126,6 +131,11 @@ void ModelMeshPart::ModifyEffect( ID3D11Device* d3dDevice, std::shared_ptr<IEffe
 ModelMesh::ModelMesh() :
     ccw(true),
     pmalpha(true)
+{
+}
+
+
+ModelMesh::~ModelMesh()
 {
 }
 
@@ -213,6 +223,11 @@ void XM_CALLCONV ModelMesh::Draw( ID3D11DeviceContext* deviceContext,
 //--------------------------------------------------------------------------------------
 // Model
 //--------------------------------------------------------------------------------------
+
+Model::~Model()
+{
+}
+
 
 _Use_decl_annotations_
 void XM_CALLCONV Model::Draw( ID3D11DeviceContext* deviceContext, CommonStates& states,

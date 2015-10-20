@@ -18,7 +18,7 @@
 #include "SharedResourcePool.h"
 
 using namespace DirectX;
-using namespace Microsoft::WRL;
+using Microsoft::WRL::ComPtr;
 
 
 // Internal state object implementation class. Only one of these helpers is allocated
@@ -306,7 +306,7 @@ ID3D11RasterizerState* CommonStates::Wireframe() const
 {
     return DemandCreate(pImpl->wireframe, pImpl->mutex, [&](ID3D11RasterizerState** pResult)
     {
-        return pImpl->CreateRasterizerState(D3D11_CULL_BACK, D3D11_FILL_WIREFRAME, pResult);
+        return pImpl->CreateRasterizerState(D3D11_CULL_NONE, D3D11_FILL_WIREFRAME, pResult);
     });
 }
 

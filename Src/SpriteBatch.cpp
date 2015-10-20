@@ -25,7 +25,7 @@
 #include "AlignedNew.h"
 
 using namespace DirectX;
-using namespace Microsoft::WRL;
+using Microsoft::WRL::ComPtr;
 
 
 // Internal SpriteBatch implementation class.
@@ -270,7 +270,7 @@ void SpriteBatch::Impl::DeviceResources::CreateIndexBuffer(_In_ ID3D11Device* de
 
     D3D11_SUBRESOURCE_DATA indexDataDesc = { 0 };
 
-    indexDataDesc.pSysMem = &indexValues.front();
+    indexDataDesc.pSysMem = indexValues.data();
 
     ThrowIfFailed(
         device->CreateBuffer(&indexBufferDesc, &indexDataDesc, &indexBuffer)
